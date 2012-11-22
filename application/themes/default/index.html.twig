@@ -1,0 +1,26 @@
+{% extends _layout %}
+
+{% block content %}
+
+    <div class="row">
+        <div class="span12">
+          <div class="well">
+            RegexMan supports OAuth Authentication. <br />
+            Choose the OAuth provider of your choice and login to start the game.
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="span4">
+          <p><a href="/auth/session/facebook/"><img src="/assets/img/signin_facebook.jpg" alt="" /></a></p>
+	<p><a href="/auth/session/google/"><img src="/assets/img/goog-login-button.png" alt="" /></a></p>
+        </div>
+        <div class="span4">
+         
+        </div>
+        <div class="span4">
+        </div>
+      </div>
+
+{% endblock %}

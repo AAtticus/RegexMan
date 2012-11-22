@@ -1,0 +1,132 @@
+{% extends _layout %}
+
+{% block content %}
+
+    <div class="row">
+        <div class="span12 text-center">
+            <div class="alert alert-info">
+                <h3>Survival Mode</h3>
+                <p><a href="/profile" class="btn btn-secondary">Back to your Dashboard</a></p>
+            </div>
+        </div>
+    </div>
+
+    <hr>
+
+    <div class="row">
+        <div class="span4">
+            <h4>Game Id</h4>
+            <p>{{ Game.id }}</p>
+        </div>
+        <div class="span4">
+            <h4>Points Collected in this game</h4>
+            <p class="label label-warning">{{ Game.points_collected }}</p>
+        </div>
+        <div class="span4">
+            <div class="well">
+                <h4>You have <span id="count">45</span> seconds left</h4>
+            </div>
+        </div>
+    </div>
+
+    <hr>
+
+    <div class="row">
+        <div class="span12">
+            <div class="well">
+                <strong>QUESTION:</strong> {{Question.description}} <br />
+                <strong>Difficulty:</strong> {{Question.difficulty}}
+            </div>
+        </div>
+    </div>
+
+    {% if continue %}
+    <div class="row">
+        <div class="span12 text-center">
+            <div class="alert alert-warning">
+                <h4>CORRECT!</h4>
+                <a href="/play/game/{{Game.id}}/{{NxtQuestion.id}}" class="btn btn-warning">Continue!</a>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+
+    <div class="row">
+        <div class="span4">
+            <h3>Input Text</h3>
+            {{Question.input | explodeToUl }}
+        </div>
+
+        <div class="span4">
+            <h3>Expected Result</h3>
+            {{Question.answer | arrayToUl }}
+        </div>
+
+        <div class="span4">
+            <h3>Your Result</h3>
+
+            {% if UserLines %}
+                <ul class="unstyled">
+                {% for AnswerLine in UserLines %}
+                    <li class="AnswerLine.class">{{AnswerLine.text}}</li>
+                {% endfor %}
+                </ul>
+            {% endif %}
+            
+        </div>
+    </div>
+
+    <hr>
+
+    <div class="row">
+        
+        <form id="q" action="" method="POST">
+            <div class="span8">
+                <input type="text" class="input-block-level" name="regex" placeholder="Enter your pattern" value="{% if Regex%} {{ Regex }} {% endif %}"  {% if continue %} disabled="disabled" {% endif %} />
+                <div id="cheatcode" class="label label-error">
+                    {{Question.pattern}}
+                </div>
+            </div>
+
+            <div class="span4">
+                <input type="submit" class="btn btn-primary btn-block" {% if continue %} disabled="disabled" {% endif %}value="Submit" />
+            </div> 
+
+        </form>
+    </div>
+
+
+
+{% endblock %}
+
+{% block customjs %}
+<script>
+$(document).ready(function() {
+
+    var hash = window.location.hash.substring(1);;
+
+    if(hash)
+    {
+        $('#count').text(hash);
+    }
+    
+
+    setInterval(function() {
+        var counter = $("#count").text() - 1;
+
+        $('#q').attr('action', '#'+counter);
+
+        if(counter == 0)
+        {
+            window.location.replace("/pages/you_lost");
+        }
+
+        $('#count').html(counter)
+    }, 1000)
+
+})
+</script>
+
+
+
+{% endblock %}

@@ -1,0 +1,16 @@
+{% extends _layout %}
+
+{% block content %}
+
+    <div class="row">
+        <div class="span12">
+          <div class="alert alert-success">
+            <h1>Congrats {{GameUser.first_name}}!</h1>
+            <p>You have completed this game.</p>
+            <p><a class="btn btn-secondary btn-large" href="/profile">Go back to your dashboard</a></p>
+          </div>
+        </div>
+      </div>
+
+
+{% endblock %}

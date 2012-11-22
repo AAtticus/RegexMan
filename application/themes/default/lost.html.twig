@@ -1,0 +1,16 @@
+{% extends _layout %}
+
+{% block content %}
+
+    <div class="row">
+        <div class="span12">
+          <div class="alert alert-error">
+            <h1>Ow no, {{GameUser.first_name}}!</h1>
+            <p>You failed to complete the game within the given time.</p>
+            <p><a class="btn btn-secondary btn-large" href="/profile">Go back to your dashboard</a></p>
+          </div>
+        </div>
+      </div>
+
+
+{% endblock %}

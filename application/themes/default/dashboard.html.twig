@@ -1,0 +1,78 @@
+{% extends _layout %}
+
+{% block content %}
+
+    <div class="row">
+    	<div class="span3">
+    		<div class="well">
+    			<img src="{% if GameUser.image %}{{GameUser.image}}{% else %} http://placehold.it/50x50 {% endif %}" class="thumbnail" width="50" height="50" />
+    			<h5>{{GameUser.first_name}} {{GameUser.last_name}}</h5>
+    			<p>{{GameUser.email}}</p>
+    			<p><small>Your OAuth ID: {{GameUser.uid}}</small></p>
+    			<p><strong>Total Points Collected</strong>: <span class="label label-warning">{{TotalPoints.points_collected}}</span></p>
+    			<hr />
+    			<p><a href="/auth/logout/" class="btn btn-primary btn-mini">Logout</a></p>
+    		</div>
+    	</div>
+
+    	<div class="span9">
+
+            <p>It's recommended to start with a tutorial</p>
+
+            <p><a href="/play/start/tutorial" class="btn btn-secondary">New Tutorial Game</a></p>
+            <small>You can't gain points while playing the tutorial</small>
+
+            <hr>
+
+    		<p>There are two different Game Options available</p>
+			<h4><strong>Story Mode</strong></h4>
+
+			<p>Solve regexes with an increasing difficulty level. Complete all questions to finish the game. You will gain more points for difficult regexes. But think before you try, because you will lose points for every incorrect try.</p>
+
+			<p><a href="/play/start/story" class="btn btn-warning">New Story Mode Game</a></p>
+
+			<hr>
+
+			<h4><strong>Survival Mode</strong></h4>
+    		<p>You start with 45 seconds. Every correct answer will give you extra time to complete all questions. Think hard but think fast before you get overrun by the Regex Clock.</p>
+
+    		<p><a href="/play/start/survival" class="btn btn-warning">New Survival Mode Game</a></p>
+
+            <hr>
+
+            <small>RegexMan uses the <a href="http://www.pcre.org/">PCRE -  Perl Compatible Regular Expressions</a> dialect which is the default REGEX flavour in PHP5</small>
+    	</div>
+    </div>
+
+    <hr>
+
+    <div class="row">
+        <div class="span12">
+            <h3>Your Games</h3>
+            <table class="table table-striped">
+                <thead>
+                    <td>Game ID</td>
+                    <td>Game Mode</td>
+                    <td>Started</td>
+                    <td>Points Collected</td>
+                    <td>Progress</td>
+                    <td>Manage</td>
+                </thead>
+                <tbody>
+                {% for Game in MyGames %}
+                <tr>
+                    <td>{{Game.id}}</td>
+                    <td>{{Game.game_mode}}</td>
+                    <td>{{Game.date_created}}</td>
+                    <td>{{Game.points_collected}}</td>
+                    <td>{% if Game.completed == 1 %} <span class="label label-success">Completed</span> {% else %} <a href="/play/game/{{Game.id}}/{{Game.current_question_id}}" class="btn btn-secondary">Continue</a> {% endif %}</td>
+                    <td><a href="/play/cancel/{{Game.id}}">Cancel</a></td>
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+
+{% endblock %}
